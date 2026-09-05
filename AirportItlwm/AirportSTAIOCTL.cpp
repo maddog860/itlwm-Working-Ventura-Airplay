@@ -1453,10 +1453,6 @@ getSCAN_RESULT(OSObject *object, struct apple80211_scan_result **sr)
 IOReturn AirportItlwm::
 setVIRTUAL_IF_CREATE(OSObject *object, struct apple80211_virt_if_create_data* data)
 {
-    // From Ventura, the virtual interface sequence has channged, now temporary disabled the virtual interface creation because it is no functionality. This fix the issue of delaying start time of associating to AP.
-#if 0 // TEST: re-enable virtual interface creation on Ventura
-    return kIOReturnUnsupported;
-#else
     struct ether_addr addr;
     struct apple80211_channel chann;
     XYLog("%s role=%d, bsd_name=%s, mac=%s, unk1=%d\n", __FUNCTION__, data->role, data->bsd_name,
@@ -1496,13 +1492,12 @@ setVIRTUAL_IF_CREATE(OSObject *object, struct apple80211_virt_if_create_data* da
         }
 
         fAWDLInterface = inf;
-        inf->registerService(); // TEST: attach + publish AWDL to IOService/CoreWiFi
+        inf->registerService();
     } else {
         XYLog("%s unhandled virtual interface role type: %d\n", __FUNCTION__, data->role);
         return kIOReturnError;
     }
     return kIOReturnSuccess;
-#endif
 }
 
 IOReturn AirportItlwm::
