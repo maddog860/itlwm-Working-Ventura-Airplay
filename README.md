@@ -1,3 +1,10 @@
+# Airplay/Screen Mirroring bug fix for AX210NGW cards and certain other Intel WIFI cards, specefically in Mac OS Ventura.
+
+# Potentially affected cards by this bug:
+3165/3168, 7260/7265, 8260/8265, 9260, 9461/9462, 9560, AX101, AX200, AX201, AX210, AX211, AX411, and the corresponding Killer 1550/AX1650 variants
+
+Probably related:
+
 # itlwm
 
 **An Intel Wi-Fi Adapter Kernel Extension for macOS, based on the OpenBSD Project.**
