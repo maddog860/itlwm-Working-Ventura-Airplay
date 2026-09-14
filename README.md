@@ -1,5 +1,25 @@
-# itlwm
+# Ventura Airplay Fix (Intel Wifi Bug fix)
 
+This kext is meant to help those who have an Intel wifi card, and find themselves being unable to use Airplay or even notice TV's connected on the network (using Ventura 13.7.8), when interacting with system settings or screen mirroring in Control Center.
+
+Has been tested with a Latitude 7490 and Intel AX210NGW wifi card.
+
+Taken from AI Write-up:
+
+The important fix was the Ventura AWDL virtual-interface path:
+
+if (!inf->attach(this)) {
+XYLog("%s failed to attach AWDL interface to controller\n", FUNCTION);
+inf->release();
+return kIOReturnError;
+}
+
+fAWDLInterface = inf;
+inf->registerService();
+
+combined with re-enabling Ventura virtual-interface creation instead of returning kIOReturnUnsupported.
+
+So the real bug was not Bonjour, not the TV, not infra en1, and not Sonoma-only Skywalk architecture. AirportItlwm was creating the AWDL object, but not attaching/publishing it as a real IOService child, so CoreWiFi could not resolve the awdl role. Once attached and registered, the TV appeared and AirPlay worked. Contains AI generated code.
 **An Intel Wi-Fi Adapter Kernel Extension for macOS, based on the OpenBSD Project.**
 
 ## Documentation
